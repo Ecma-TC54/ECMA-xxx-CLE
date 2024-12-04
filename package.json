@@ -28,7 +28,7 @@
     "jsdom": "^15.0.0",
     "pagedjs": "^0.4.3",
     "pagedjs-cli": "^0.4.3",
-    "tar-stream": "^2.2.0",
+    "tar-stream": "^3.1.7",
     "tiny-json-http": "^7.1.2"
   }
 }
