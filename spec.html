@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en-GB-oxendict">
+<meta charset="utf-8">
+<link rel="icon" href="img/favicon.ico">
+<style>
+  #metadata-block {
+    margin: 4em 0;
+    padding: 10px;
+    border: 1px solid #ee8421;
+  }
+  #metadata-block h1 {
+    font-size: 1.5em;
+    margin-top: 0;
+  }
+  #metadata-block > ul {
+    list-style-type: none;
+    margin: 0; padding: 0;
+  }
+
+  #ecma-logo {
+    width: 500px;
+  }
+
+  .unicode-property-table {
+    table-layout: fixed;
+    width: 100%;
+    font-size: 80%;
+  }
+
+  .corner-cell {
+    position: relative;
+    height: 2lh;
+  }
+  .corner-cell .slash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom left, transparent calc(50% - 1px), gray, transparent calc(50% + 1px));
+  }
+  .corner-cell > .column {
+    position: absolute;
+    bottom: 0.4em;
+    left: 1em;
+  }
+  .corner-cell > .row {
+    position: absolute;
+    top: 0.4em;
+    right: 1em;
+  }
+</style>
+<pre class="metadata">
+  title: Common Lifecycle Enumeration Specification
+  shortname: ECMA-xxx
+  status: draft
+  location: https://tc54.org/ecmaXXX/
+  markEffects: true
+</pre>
+<p><img src="img/ecma-logo.svg" id="ecma-logo" alt="Ecma International logo"></p>
+<div id="metadata-block">
+  <h1>About this Specification</h1>
+  <p>The document at <a href="https://tc54.org/ecmaXXX/">https://tc54.org/ecmaXXX/</a> is the most accurate and up-to-date Common Lifecycle Enumeration specification.</p>
+  <p>This document is available as <a href>a single page</a> and as <a href="multipage/">multiple pages</a>.</p>
+  <h1>Contributing to this Specification</h1>
+  <p>This specification is developed on GitHub with the help of the Package-URL community. There are a number of ways to contribute to the development of this specification:</p>
+  <ul>
+    <li>GitHub Repository: <a href="https://github.com/Ecma-TC54/ECMA-xxx-CLE">https://github.com/Ecma-TC54/ECMA-xxx-CLE</a></li>
+    <li>Issues: <a href="https://github.com/Ecma-TC54/ECMA-xxx-CLE/issues">All Issues</a>, <a href="https://github.com/Ecma-TC54/ECMA-xxx-CLE/issues/new">File a New Issue</a></li>
+    <li>Pull Requests: <a href="https://github.com/Ecma-TC54/ECMA-xxx-CLE/pulls">All Pull Requests</a>, <a href="https://github.com/Ecma-TC54/ECMA-xxx-CLE/pulls/new">Create a New Pull Request</a></li>
+    <li>
+      Editors:
+      <ul>
+        <li><a href="mailto:oej@edvina.net">Olle E Johansson</a></li>
+        <li><a href="mailto:steve.springett@owasp.org">Steve Springett</a></li>
+      </ul>
+    </li>
+    <li>
+      Community:
+      <ul>
+        <li>Chat: <a href="https://owasp.slack.com/archives/C06GUKY03NC">Slack Channel</a></li>
+      </ul>
+    </li>
+  </ul>
+  <p>Refer to the <emu-xref href="#sec-colophon">colophon</emu-xref> for more information on how this document is created.</p>
+</div>
+
+<emu-intro id="sec-intro">
+  <h1>Introduction</h1>
+  TODO
+</emu-intro>
+
+<emu-clause id="sec-scope">
+  <h1>Scope</h1>
+  <p>This Standard defines the Common Lifecycle Enumeration specification.</p>
+</emu-clause>
+
+<emu-clause id="sec-conformance">
+  <h1>Conformance</h1>
+  <p>TODO</p>
+  <p>A conforming implementation of CLE may choose to implement or not implement <dfn>Normative Optional</dfn> subclauses. If any Normative Optional behaviour is implemented, all of the behaviour in the containing Normative Optional clause must be implemented. A Normative Optional clause is denoted in this specification with the words "Normative Optional" in a coloured box, as shown below.</p>
+
+  <emu-clause id="sec-conformance-normative-optional" oldids="sec-conformance.normative-optional" example normative-optional>
+    <h1>Example Normative Optional Clause Heading</h1>
+    <p>Example clause contents.</p>
+  </emu-clause>
+</emu-clause>
+
+<emu-clause id="sec-normative-references">
+  <h1>Normative References</h1>
+  <p>The following referenced documents are indispensable for the application of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+  <p>
+    RFC 3986, <i>Uniform Resource Identifier (URI): Generic Syntax</i>.<br>
+    <a href="https://datatracker.ietf.org/doc/html/rfc3986">https://datatracker.ietf.org/doc/html/rfc3986</a>
+  </p>
+</emu-clause>
+
+<emu-clause id="sec-overview">
+  <h1>Overview</h1>
+  <p>This section contains a non-normative overview of the Common Lifecycle Enumeration specification.</p>
+  <p>TODO</p>
+</emu-clause>
+
+<emu-clause id="sec-cle-specification">
+  <h1>Common Lifecycle Enumeration Specification</h1>
+  <p>TODO</p>
+</emu-clause>
+
+<emu-annex id="sec-colophon">
+  <h1>Colophon</h1>
+  <p>This specification is authored on <a href="https://github.com/Ecma-TC54/ECMA-xxx-CLE">GitHub</a> in a plaintext source format called <a href="https://github.com/tc39/ecmarkup">Ecmarkup</a>. Ecmarkup is an HTML and Markdown dialect that provides a framework and toolset for authoring ECMA specifications in plaintext and processing the specification into a full-featured HTML rendering that follows the editorial conventions for this document. Ecmarkup builds on and integrates a number of other formats and technologies including <a href="https://github.com/rbuckton/grammarkdown">Grammarkdown</a> for defining syntax and <a href="https://github.com/tc39/ecmarkdown">Ecmarkdown</a> for authoring algorithm steps. PDF renderings of this specification are produced by printing the HTML rendering to a PDF.</p>
+  <p>We extend our gratitude to TC39 for their exceptional work in developing Ecmarkup, which has greatly facilitated TC54's successful adoption of this tool for the preparation and maintenance of our technical specifications.</p>
+</emu-annex>
+
+<emu-annex id="sec-bibliography">
+  <h1>Bibliography</h1>
+  <p>TODO</p>
+</emu-annex>

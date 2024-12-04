@@ -1,0 +1,43 @@
+name: 'Build on CI'
+
+on: [pull_request, push, workflow_dispatch]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    name: 'Build Documentation'
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-cache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-cache-${{ runner.os }}-
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build-head
+
+      - name: Archive "out" Directory
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-snapshot
+          path: ./out
