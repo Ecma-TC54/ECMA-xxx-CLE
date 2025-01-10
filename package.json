@@ -24,7 +24,7 @@
   "homepage": "https://tc54.org/cle/",
   "devDependencies": {
     "ecmarkup": "^19.1.0",
-    "glob": "^7.1.6",
+    "glob": "^11.0.1",
     "jsdom": "^15.0.0",
     "pagedjs": "^0.4.3",
     "pagedjs-cli": "^0.4.3",
