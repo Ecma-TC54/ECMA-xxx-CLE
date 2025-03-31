@@ -23,7 +23,7 @@
   "author": "ECMA TC54",
   "homepage": "https://tc54.org/cle/",
   "devDependencies": {
-    "ecmarkup": "^19.1.0",
+    "ecmarkup": "^21.2.0",
     "glob": "^7.1.6",
     "jsdom": "^15.0.0",
     "pagedjs": "^0.4.3",
