@@ -1,17 +1,18 @@
-name: 'Build on CI'
+name: 'Build and Deploy Documentation'
 
-on: [pull_request, push, workflow_dispatch]
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
-  build:
-    name: 'Build Documentation'
+  install:
+    name: 'Install Dependencies'
     runs-on: ubuntu-22.04
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -19,25 +20,120 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Cache npm dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: npm-cache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            npm-cache-${{ runner.os }}-
+          node-version: '18'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci --no-audit --no-fund --verbose
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: "true"
+
+      - name: Cache node_modules
+        uses: actions/cache/save@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+
+  build-docs:
+    name: 'Build Documentation'
+    runs-on: ubuntu-22.04
+    needs: install
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Restore node_modules
+        uses: actions/cache/restore@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
 
       - name: Build Project
-        run: npm run build-head
+        run: npm run build
 
       - name: Archive "out" Directory
         uses: actions/upload-artifact@v4
         with:
-          name: documentation-snapshot
+          name: html-documentation
           path: ./out
+
+  deploy-docs:
+    name: 'Deploy Documentation'
+    runs-on: ubuntu-22.04
+    needs: build-docs
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Restore html-documentation Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: html-documentation
+          path: ./out
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+
+  build-for-pdf:
+    name: 'Build Documentation for PDF'
+    runs-on: ubuntu-22.04
+    needs: install
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Restore node_modules
+        uses: actions/cache/restore@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Build for PDF
+        run: npm run build-for-pdf
+
+      - name: Archive PDF Output Directory
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-printable-documentation
+          path: ./out
+
+  publish-pdf:
+    name: 'Publish PDF'
+    runs-on: ubuntu-22.04
+    needs: build-for-pdf
+    steps:
+      - name: Restore PDF Output
+        uses: actions/download-artifact@v4
+        with:
+          name: html-printable-documentation
+          path: ./out
+
+      - name: Run Prince Container
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/out:/work" \
+            -e LICENSE_FILE="${{ secrets.PRINCE_LICENSE }}" \
+            ghcr.io/ecma-tc54/princexml:main \
+            --script /usr/local/lib/node_modules/ecmarkup/js/print.js /work/index.html -o /work/spec.pdf
+
+      - name: Archive PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdf-snapshot
+          path: ./out/spec.pdf
