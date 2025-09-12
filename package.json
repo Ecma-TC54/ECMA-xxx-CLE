@@ -23,12 +23,8 @@
   "author": "ECMA TC54",
   "homepage": "https://tc54.org/cle/",
   "devDependencies": {
-    "ecmarkup": "21.3.1",
-    "glob": "^7.1.6",
-    "jsdom": "^15.0.0",
+    "ecmarkup": "^21.3.1",
     "pagedjs": "^0.4.3",
-    "pagedjs-cli": "^0.4.3",
-    "tar-stream": "^2.2.0",
-    "tiny-json-http": "^7.1.2"
+    "pagedjs-cli": "^0.4.3"
   }
 }
