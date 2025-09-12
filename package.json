@@ -9,7 +9,7 @@
     "prebuild-only": "npm run clean && mkdir out && cp -R img out",
     "build-only": "ecmarkup --verbose spec.emu --multipage out",
     "build": "npm run build-head",
-    "build-for-pdf": "ecmarkup --verbose spec.emu --old-toc --assets external out/index.html",
+    "build-for-pdf": "ecmarkup --verbose spec.emu --printable --assets external out/index.html",
     "pdf": "npm run build-for-pdf && pagedjs-cli --page-size a4 out/index.html -o out/index.pdf",
     "prebuild-snapshot": "npm run clean",
     "build-snapshot": "npm run build-head && node scripts/insert_snapshot_warning.js",
