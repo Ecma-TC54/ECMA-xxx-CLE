@@ -12,15 +12,13 @@ permissions:
 jobs:
   install:
     name: 'Install Dependencies'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Install Dependencies
         run: npm ci --no-audit --no-fund --verbose
@@ -35,16 +33,14 @@ jobs:
 
   build-docs:
     name: 'Build Documentation'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: install
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Restore node_modules
         uses: actions/cache/restore@v4
@@ -52,8 +48,7 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
 
-      - name: Build Project
-        run: npm run build
+      - run: npm run build
 
       - name: Archive "out" Directory
         uses: actions/upload-artifact@v4
@@ -63,7 +58,7 @@ jobs:
 
   deploy-docs:
     name: 'Deploy Documentation'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: build-docs
     if: github.ref == 'refs/heads/main'
     permissions:
@@ -87,16 +82,14 @@ jobs:
 
   build-for-pdf:
     name: 'Build Documentation for PDF'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: install
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Restore node_modules
         uses: actions/cache/restore@v4
@@ -115,7 +108,7 @@ jobs:
 
   publish-pdf:
     name: 'Publish PDF'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: build-for-pdf
     steps:
       - name: Restore PDF Output
