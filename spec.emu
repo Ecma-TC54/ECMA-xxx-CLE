@@ -83,6 +83,7 @@
       Editors:
       <ul>
         <li><a href="mailto:benji@xeol.io">Benji Visser</a></li>
+        <li><a href="mailto:ljharb@gmail.com">Jordan Harband</a></li>
         <li><a href="mailto:steve.springett@owasp.org">Steve Springett</a></li>
       </ul>
     </li>
@@ -96,54 +97,588 @@
   <p>Refer to the <emu-xref href="#sec-colophon">colophon</emu-xref> for more information on how this document is created.</p>
 </div>
 
+<!-- Common Lifecycle Enumeration Specification -->
+
 <emu-intro id="sec-intro">
   <h1>Introduction</h1>
-  TODO
+  <p>The Common Lifecycle Enumeration (CLE) specification provides a standardized, machine-readable format for communicating lifecycle events of software and hardware components throughout the supply chain. As modern software systems increasingly rely on complex networks of dependencies and third-party components, understanding the lifecycle status of these components becomes critical for maintaining secure, compliant, and reliable systems.</p>
+
+  <p>This specification addresses the challenge of tracking component lifecycles across diverse ecosystems by defining a unified format for expressing events such as releases, end-of-support announcements, end-of-life declarations, and component transitions. By providing a consistent structure for this information, CLE enables automated tooling to assess risks, plan migrations, and maintain supply chain transparency.</p>
+
+  <p>The CLE specification is designed to complement existing standards in the software supply chain ecosystem, including the Package-URL (PURL) specification for component identification and the Version Range (VERS) specification for version constraints. It integrates with Software Bill of Materials (SBOM) formats and transparency exchange protocols to provide comprehensive lifecycle visibility.</p>
+
+  <p>This document specifies version 1.0.0 of the Common Lifecycle Enumeration standard, developed under the auspices of Ecma International Technical Committee 54, Task Group 3 (TC54-TG3).</p>
 </emu-intro>
 
 <emu-clause id="sec-scope">
   <h1>Scope</h1>
-  <p>This Standard defines the Common Lifecycle Enumeration specification.</p>
+  <p>This Standard defines the Common Lifecycle Enumeration (CLE) specification version 1.0.0. The CLE provides a standardized format for communicating software component lifecycle events in a machine-readable format. This specification defines the JSON schema and requirements for CLE documents.</p>
 </emu-clause>
 
 <emu-clause id="sec-conformance">
   <h1>Conformance</h1>
-  <p>TODO</p>
-  <p>A conforming implementation of CLE may choose to implement or not implement <dfn>Normative Optional</dfn> subclauses. If any Normative Optional behaviour is implemented, all of the behaviour in the containing Normative Optional clause must be implemented. A Normative Optional clause is denoted in this specification with the words "Normative Optional" in a coloured box, as shown below.</p>
-
-  <emu-clause id="sec-conformance-normative-optional" oldids="sec-conformance.normative-optional" example normative-optional>
-    <h1>Example Normative Optional Clause Heading</h1>
-    <p>Example clause contents.</p>
-  </emu-clause>
+  <p>A conforming implementation of CLE must provide and consume objects that conform to the JSON Schema defined in this specification. The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119.</p>
 </emu-clause>
 
 <emu-clause id="sec-normative-references">
   <h1>Normative References</h1>
   <p>The following referenced documents are indispensable for the application of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-  <p>
-    RFC 3986, <i>Uniform Resource Identifier (URI): Generic Syntax</i>.<br>
-    <a href="https://datatracker.ietf.org/doc/html/rfc3986">https://datatracker.ietf.org/doc/html/rfc3986</a>
-  </p>
+  <ul>
+    <li>RFC 2119, Key words for use in RFCs to Indicate Requirement Levels</li>
+    <li>RFC 3986, Uniform Resource Identifier (URI): Generic Syntax</li>
+    <li>ISO 8601, Date and time — Representations for information interchange</li>
+    <li>JSON Schema Draft 2020-12</li>
+    <li>Package-URL (PURL) Specification</li>
+    <li>Version Range (VERS) Specification</li>
+  </ul>
 </emu-clause>
 
-<emu-clause id="sec-overview">
-  <h1>Overview</h1>
-  <p>This section contains a non-normative overview of the Common Lifecycle Enumeration specification.</p>
-  <p>TODO</p>
+<emu-clause id="sec-terms-and-definitions">
+  <h1>Terms and Definitions</h1>
+
+  <emu-clause id="sec-component">
+    <h1>Component</h1>
+    <p>A discrete unit of software or hardware that can be independently identified, versioned, and tracked through its lifecycle.</p>
+  </emu-clause>
+
+  <emu-clause id="sec-lifecycle-event">
+    <h1>Lifecycle Event</h1>
+    <p>A significant occurrence in the existence of a component, such as release, end of support, or renaming.</p>
+  </emu-clause>
+
+  <emu-clause id="sec-purl">
+    <h1>PURL</h1>
+    <p>Package-URL - a standardized format for identifying software packages across diverse ecosystems.</p>
+  </emu-clause>
+
+  <emu-clause id="sec-types-of-work">
+    <h1>Types of Work</h1>
+    <p>The following types of work are commonly associated with software projects regardless of whether they are open source or not:</p>
+    <ul>
+      <li><b>Marketing</b>: Promoting and advertising a software project to potential users.</li>
+      <li><b>Substantial Modifications</b>: Making substantial changes to a software project that are not considered bug fixes or security fixes, such as adding new features or functionality.</li>
+      <li><b>Bug Fixes</b>: Addressing and resolving issues or defects in a software project.</li>
+      <li><b>Security Fixes</b>: A distinct type of bug fix focused on security vulnerabilities that is useful to differentiate from other types of bug fixes.</li>
+      <li><b>Distribution</b>: The process of making a software project available for use by others.</li>
+      <li><b>Documentation</b>: Writing and updating documentation for a software project to help users understand how to use it.</li>
+    </ul>
+  </emu-clause>
 </emu-clause>
 
-<emu-clause id="sec-cle-specification">
-  <h1>Common Lifecycle Enumeration Specification</h1>
-  <p>TODO</p>
+<emu-clause id="sec-schema-definition">
+  <h1>Schema Definition</h1>
+
+  <emu-clause id="sec-json-schema">
+    <h1>JSON Schema</h1>
+    <p>CLE is formally specified by a Draft 2020-12 JSON Schema.</p>
+    <p>Each published version of the specification is accompanied by a versioned meta-schema at a stable URI:</p>
+    <pre><code>https://cle.example.com/schema/cle-&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;.schema.json</code></pre>
+    <p>Every CLE document MUST include a top-level <code>$schema</code> field whose value is the URI of the meta-schema for the version it follows.</p>
+    <p>The <code>$schema</code> field serves two purposes:</p>
+    <ul>
+      <li><b>Validation</b> – It allows tooling to validate that the document is structurally correct and conforms to the CLE specification.</li>
+      <li><b>Version Signaling</b> – It identifies the version of the CLE specification the document follows, so consumers can parse and interpret it accordingly.</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-top-level-fields">
+    <h1>Top-level Fields</h1>
+
+    <emu-table id="table-required-fields" caption="Required Fields">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>$schema</code></td>
+            <td>string</td>
+            <td>URI identifying the JSON Schema document that describes the version of the CLE schema to use.</td>
+          </tr>
+          <tr>
+            <td><code>identifier</code></td>
+            <td>string or array[string]</td>
+            <td>Component identifier(s) in the PURL format. When an array is provided, each identifier alias must identify the exact same bits from the same software but distributed differently.</td>
+          </tr>
+          <tr>
+            <td><code>updatedAt</code></td>
+            <td>string</td>
+            <td>ISO 8601 timestamp indicating when this CLE document was last updated.</td>
+          </tr>
+          <tr>
+            <td><code>events</code></td>
+            <td>array</td>
+            <td>Ordered array of Event objects representing the component's lifecycle events. MUST be ordered by ID in descending order (newest events with highest IDs first).</td>
+          </tr>
+        </tbody>
+      </table>
+    </emu-table>
+
+    <emu-table id="table-additional-fields" caption="Additional Fields">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>definitions</code></td>
+            <td>object</td>
+            <td>Container for reusable policy definitions that can be referenced throughout the document.</td>
+          </tr>
+          <tr>
+            <td><code>index</code></td>
+            <td>string</td>
+            <td>URL pointing to the index file that lists all CLE pages for this component. Only allowed to be present when pagination is used.</td>
+          </tr>
+          <tr>
+            <td><code>next</code></td>
+            <td>string</td>
+            <td>URL pointing to the next CLE page containing newer events (higher event IDs).</td>
+          </tr>
+        </tbody>
+      </table>
+    </emu-table>
+  </emu-clause>
+
+  <emu-clause id="sec-definitions-object">
+    <h1>Definitions Object</h1>
+    <p>The definitions object allows specification of reusable policies and calculations that can be referenced by events.</p>
+
+    <emu-clause id="sec-support-definitions">
+      <h1>Support Definitions</h1>
+      <p>The support object defines the support policies provided for a specific version or version range of a component. This may include first-party manufacturer support or third-party support options endorsed by the manufacturer.</p>
+      <p>Support policies are immutable once defined - the semantics and meaning of a support policy MUST NOT change over time for a given support policy ID. This ensures consistent interpretation of support commitments across the component's lifecycle.</p>
+
+      <emu-table id="table-support-policy-fields" caption="Support Policy Fields">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Type</th>
+              <th>Required</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>id</code></td>
+              <td>string</td>
+              <td>Yes</td>
+              <td>Unique identifier for the support policy.</td>
+            </tr>
+            <tr>
+              <td><code>description</code></td>
+              <td>string</td>
+              <td>Yes</td>
+              <td>Human readable description of the policy.</td>
+            </tr>
+            <tr>
+              <td><code>url</code></td>
+              <td>string</td>
+              <td>No</td>
+              <td>URL to detailed documentation about this support policy.</td>
+            </tr>
+          </tbody>
+        </table>
+      </emu-table>
+    </emu-clause>
+  </emu-clause>
+
+  <emu-clause id="sec-event-object">
+    <h1>Event Object</h1>
+    <p>The base object that represents a discrete lifecycle event. All events share these common fields.</p>
+    <p>Events are immutable once created - the content and meaning of a specific event MUST NOT change after it has been published. Additionally, the ordering of events across shards MUST NOT change.</p>
+
+    <emu-table id="table-event-required-fields" caption="Event Required Fields">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>id</code></td>
+            <td>integer</td>
+            <td>A unique, auto-incrementing integer identifier for the event.</td>
+          </tr>
+          <tr>
+            <td><code>type</code></td>
+            <td>string</td>
+            <td>The type of lifecycle event. MUST be one of the defined Event Types.</td>
+          </tr>
+          <tr>
+            <td><code>effective</code></td>
+            <td>string</td>
+            <td>The time when the event takes effect, as an ISO 8601 formatted timestamp in UTC.</td>
+          </tr>
+          <tr>
+            <td><code>published</code></td>
+            <td>string</td>
+            <td>The time when the event was first published, as an ISO 8601 formatted timestamp in UTC.</td>
+          </tr>
+        </tbody>
+      </table>
+    </emu-table>
+  </emu-clause>
 </emu-clause>
 
-<emu-annex id="sec-colophon">
-  <h1>Colophon</h1>
-  <p>This specification is authored on <a href="https://github.com/Ecma-TC54/ECMA-xxx-CLE">GitHub</a> in a plaintext source format called <a href="https://github.com/tc39/ecmarkup">Ecmarkup</a>. Ecmarkup is an HTML and Markdown dialect that provides a framework and toolset for authoring ECMA specifications in plaintext and processing the specification into a full-featured HTML rendering that follows the editorial conventions for this document. Ecmarkup builds on and integrates a number of other formats and technologies including <a href="https://github.com/rbuckton/grammarkdown">Grammarkdown</a> for defining syntax and <a href="https://github.com/tc39/ecmarkdown">Ecmarkdown</a> for authoring algorithm steps. PDF renderings of this specification are produced using a print stylesheet which takes advantage of the CSS Paged Media specification and is converted using <a href="https://www.princexml.com/">PrinceXML</a>.</p>
-  <p>We extend our gratitude to TC39 for their exceptional work in developing Ecmarkup, which has greatly facilitated TC54's successful adoption of this tool for the preparation and maintenance of our technical specifications.</p>
+<emu-clause id="sec-event-types">
+  <h1>Event Types</h1>
+
+  <emu-clause id="sec-event-type-released">
+    <h1>released</h1>
+    <p><i>Category: Version Event</i></p>
+    <p>Indicates when a component version is released and available for use.</p>
+    <p><b>Additional Required Fields:</b></p>
+    <ul>
+      <li><code>version</code> - The version string of the released component</li>
+    </ul>
+    <p><b>Additional Optional Fields:</b></p>
+    <ul>
+      <li><code>license</code> - License identifier that summarizes the license as declared in the component's metadata</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-event-type-endofdevelopment">
+    <h1>endOfDevelopment</h1>
+    <p><i>Category: Version Event</i></p>
+    <p>The manufacturer or maintainer ceases work on Substantial Modifications for a specific version or version range of a component or service. Security Fixes and Bug Fixes will continue to be provided for this specific version or version range until endOfSupport is declared, but no new features or enhancements will be added.</p>
+    <emu-note>
+      <p>TL;DR: Ceasing Substantial Modifications.</p>
+    </emu-note>
+    <p><b>Additional Required Fields:</b></p>
+    <ul>
+      <li><code>versions</code> - Array of version specifications</li>
+      <li><code>supportId</code> - Reference to a support policy defined in the definitions section</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-event-type-endofsupport">
+    <h1>endOfSupport</h1>
+    <p><i>Category: Version Event</i></p>
+    <p>The manufacturer or maintainer ceases providing Security Fixes and Bug Fixes for a specific version or version range of a component or service.</p>
+    <p>The <code>supportId</code> field MUST be included and used to specify which support policy is ending, referencing a support policy defined in the definitions section.</p>
+    <emu-note>
+      <p>TL;DR: Ceasing Security Fixes and Bug Fixes.</p>
+    </emu-note>
+    <p><b>Additional Required Fields:</b></p>
+    <ul>
+      <li><code>versions</code> - Array of version specifications</li>
+      <li><code>supportId</code> - Reference to a support policy defined in the definitions section</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-event-type-endoflife">
+    <h1>endOfLife</h1>
+    <p><i>Category: Version Event</i></p>
+    <p>The manufacturer or maintainer formally ceases all work (including Distribution, Substantial Modifications, Bug Fixes, Security Fixes, Documentation, and Maintenance) for a specific version or version range of a component. No further updates, support, or distribution will be provided for this specific version or version range. The component is considered retired.</p>
+    <emu-note>
+      <p>TL;DR: Ceasing all work.</p>
+    </emu-note>
+    <p><b>Additional Required Fields:</b></p>
+    <ul>
+      <li><code>versions</code> - Array of version specifications</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-event-type-endofdistribution">
+    <h1>endOfDistribution</h1>
+    <p><i>Category: Version Event</i></p>
+    <p>The manufacturer or maintainer ceases distribution of a specific version or version range of a component or service. This should only be used when the manufacturer has control over the distribution of the component or service.</p>
+    <p><b>Additional Required Fields:</b></p>
+    <ul>
+      <li><code>versions</code> - Array of version specifications</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-event-type-endofmarketing">
+    <h1>endOfMarketing</h1>
+    <p><i>Category: Version Event</i></p>
+    <p>The manufacturer or maintainer ceases marketing and promotion of a specific version or version range of a component or service. The component or service may still be available, and existing support policies may remain in effect, but the manufacturer will no longer seek new customers or promote its use.</p>
+    <emu-note>
+      <p>TL;DR: Ceasing marketing and promotion.</p>
+    </emu-note>
+    <p><b>Additional Required Fields:</b></p>
+    <ul>
+      <li><code>versions</code> - Array of version specifications</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-event-type-supersededby">
+    <h1>supersededBy</h1>
+    <p><i>Category: Version Event</i></p>
+    <p>Indicates when a version of a component is superseded by another version of a component. This should only exist for components in which version progression is not implicit.</p>
+    <p><b>Additional Required Fields:</b></p>
+    <ul>
+      <li><code>supersededByVersion</code> - Plain version string that supersedes it</li>
+    </ul>
+    <p><b>Additional Optional Fields:</b></p>
+    <ul>
+      <li><code>versions</code> - Array of version specifications</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-event-type-componentrenamed">
+    <h1>componentRenamed</h1>
+    <p><i>Category: Component Event</i></p>
+    <p>Indicates when a component is renamed.</p>
+    <p><b>Additional Required Fields:</b></p>
+    <ul>
+      <li><code>identifiers</code> - Array of identifier objects specifying the new identifiers for the component</li>
+    </ul>
+    <p><b>Additional Optional Fields:</b></p>
+    <ul>
+      <li><code>description</code> - Human-readable description of the event</li>
+      <li><code>references</code> - List of URLs to supporting documentation</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-event-type-withdrawn">
+    <h1>withdrawn</h1>
+    <p><i>Category: Meta Event</i></p>
+    <p>Indicates that a previously published event is being withdrawn or revoked. This is used in a prepend-only event model where events cannot be modified, only new events can be added. When an event is withdrawn, it should be ignored during processing as if it never existed.</p>
+    <p><b>Additional Required Fields:</b></p>
+    <ul>
+      <li><code>eventId</code> - The ID of the event being withdrawn</li>
+    </ul>
+    <p><b>Additional Optional Fields:</b></p>
+    <ul>
+      <li><code>references</code> - List of URLs to supporting documentation</li>
+      <li><code>reason</code> - Human-readable explanation for why the event is being withdrawn</li>
+    </ul>
+  </emu-clause>
+</emu-clause>
+
+<emu-clause id="sec-event-categories">
+  <h1>Event Categories</h1>
+  <p>The CLE specification supports three distinct categories of events:</p>
+
+  <emu-clause id="sec-version-events">
+    <h1>Version Events</h1>
+    <p>Events that affect specific versions or ranges of versions of a component. These events use either the <code>version</code> or <code>range</code> field to specify which versions are affected. Version Events include:</p>
+    <ul>
+      <li><code>released</code></li>
+      <li><code>endOfDevelopment</code></li>
+      <li><code>endOfSupport</code></li>
+      <li><code>endOfLife</code></li>
+      <li><code>endOfDistribution</code></li>
+      <li><code>endOfMarketing</code></li>
+      <li><code>supersededBy</code></li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-component-events">
+    <h1>Component Events</h1>
+    <p>Events that affect the component itself and may impact how the component is identified or referenced. These events often affect all versions of a component from the effective date forward. Component Events include:</p>
+    <ul>
+      <li><code>componentRenamed</code> - Changes how the component is identified</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-meta-events">
+    <h1>Meta Events</h1>
+    <p>Events that affect other events in the history. These are used in the prepend-only event model to manage the event stream. Meta Events include:</p>
+    <ul>
+      <li><code>withdrawn</code> - Revokes a previously published event</li>
+    </ul>
+  </emu-clause>
+</emu-clause>
+
+<emu-clause id="sec-event-processing-rules">
+  <h1>Event Processing Rules</h1>
+  <p>CLE uses a prepend-only event model with the following rules:</p>
+
+  <emu-alg>
+    1. <b>Immutability</b>: Once an event is published, it cannot be modified. New events must be added to correct or update information.
+    1. <b>Ordering</b>: Events MUST be ordered by ID in descending order (newest events with highest IDs first).
+    1. <b>ID Assignment</b>: Event IDs MUST be assigned as auto-incrementing integers in the order events are added (not by effective date).
+    1. <b>Processing Order</b>: When processing events, consumers should process them in reverse order (oldest to newest by ID) to build the correct state.
+    1. <b>Withdrawn Events</b>: When a <code>withdrawn</code> event is encountered:
+      1. The event referenced by <code>eventId</code> should be ignored as if it never existed.
+      1. The withdrawn event itself remains in the history for audit purposes.
+      1. Any dependent events or calculations based on the withdrawn event should be recalculated.
+  </emu-alg>
+</emu-clause>
+
+<emu-clause id="sec-pagination">
+  <h1>Pagination</h1>
+  <p>CLE supports pagination to handle components with extensive event histories. When a CLE file reaches the maximum limit of 100,000 events, it must be split into multiple pages.</p>
+
+  <emu-clause id="sec-pagination-rules">
+    <h1>Pagination Rules</h1>
+    <emu-alg>
+      1. <b>Page Size Limit</b>: A single CLE page MUST NOT exceed 100,000 events.
+      1. <b>Event ID Continuity</b>: Event IDs MUST be globally unique and incrementing across all pages.
+      1. <b>Event Ordering</b>: Within each page, events MUST be ordered by ID in descending order.
+      1. <b>Page Chaining</b>: Pages are linked using the <code>next</code> field.
+      1. <b>Index File</b>: When pagination is used, an index file SHOULD be provided via the <code>index</code> field.
+    </emu-alg>
+  </emu-clause>
+
+  <emu-clause id="sec-cle-index-schema">
+    <h1>CLE Index Schema</h1>
+    <p>The CLE index file provides a directory of all pages for a component.</p>
+
+    <emu-table id="table-index-fields" caption="Index Fields">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>$schema</code></td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>URI identifying the CLE index schema version.</td>
+          </tr>
+          <tr>
+            <td><code>pages</code></td>
+            <td>array[object]</td>
+            <td>Yes</td>
+            <td>Array of page descriptor objects, ordered by event ID ranges.</td>
+          </tr>
+        </tbody>
+      </table>
+    </emu-table>
+  </emu-clause>
+
+  <emu-clause id="sec-processing-paginated-files">
+    <h1>Processing Paginated CLE Files</h1>
+    <p>When processing paginated CLE files:</p>
+    <emu-alg>
+      1. Start with any page (typically discovered via the index file or a known entry point).
+      1. Process events within the current page according to standard processing rules.
+      1. To process all events, use the index file to discover all pages, or follow <code>next</code> links to traverse pages.
+      1. Event IDs are globally unique, so <code>withdrawn</code> events can reference events on any page.
+    </emu-alg>
+  </emu-clause>
+</emu-clause>
+
+<emu-clause id="sec-use-cases">
+  <h1>Use Cases</h1>
+  <p>The CLE specification aims to address several common use cases in software component lifecycle management.</p>
+
+  <emu-clause id="sec-supported-use-cases">
+    <h1>v1.0.0 Supported Use Cases</h1>
+    <ul>
+      <li><b>General Availability</b>: Track when new versions of a component are released and available for use</li>
+      <li><b>End of Support/End of Life</b>: Communicate when versions will no longer receive updates or support</li>
+      <li><b>Component Renaming</b>: Handle cases where a component's identifiers change</li>
+    </ul>
+  </emu-clause>
+
+  <emu-clause id="sec-future-use-cases">
+    <h1>Future Use Cases</h1>
+    <p>These use cases will be addressed in future versions of the specification based on community feedback and requirements:</p>
+    <ul>
+      <li><b>Complex License Changes</b>: Handling license changes for previously released versions</li>
+      <li><b>Component Bundling/Unbundling</b>: Track when components are bundled into or extracted from larger packages</li>
+      <li><b>Component Acquisition</b>: Handle cases where components change ownership</li>
+      <li><b>Extended Support</b>: Support for third-party extended support offerings</li>
+      <li><b>Third Party Claims</b>: Handling CLE from a third party perspective</li>
+      <li><b>Component Forking</b>: Track when components are forked into new projects</li>
+      <li><b>Export Restrictions</b>: Handle cases where components become restricted in certain regions</li>
+      <li><b>Security Status Changes</b>: Track when components are marked as compromised or unsafe</li>
+    </ul>
+  </emu-clause>
+</emu-clause>
+
+<emu-annex id="sec-example">
+  <h1>Example CLE Document</h1>
+  <pre><code class="json">
+{
+  "$schema": "https://TODO/cle.v1.0.0.json",
+  "identifier": "pkg:npm/example-component",
+  "updatedAt": "2021-01-15T00:00:00Z",
+  "definitions": {
+    "support": [
+      {
+        "id": "standard",
+        "description": "Standard product support policy",
+        "url": "https://example.com/support/standard"
+      }
+    ]
+  },
+  "events": [
+    {
+      "id": 5,
+      "type": "withdrawn",
+      "effective": "2021-01-15T00:00:00Z",
+      "published": "2021-01-15T00:00:00Z",
+      "eventId": 2,
+      "reason": "The endOfSupport date was incorrect.",
+      "references": [
+        "https://example.com/support-correction"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "endOfSupport",
+      "effective": "2021-01-01T00:00:00Z",
+      "published": "2021-01-01T00:00:00Z",
+      "versions": [
+        {
+          "range": "vers:npm/>=1.0.0|<2.0.0"
+        }
+      ],
+      "supportId": "standard"
+    },
+    {
+      "id": 3,
+      "type": "componentRenamed",
+      "effective": "2020-01-01T00:00:00Z",
+      "published": "2020-01-01T00:00:00Z",
+      "description": "Component renamed due to acquisition",
+      "identifiers": [
+        {
+          "type": "PURL",
+          "value": "pkg:npm/new-component"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "endOfSupport",
+      "effective": "2020-01-01T00:00:00Z",
+      "published": "2020-01-01T00:00:00Z",
+      "versions": [
+        {
+          "range": "vers:npm/>=1.0.0|<2.0.0"
+        }
+      ],
+      "supportId": "standard"
+    },
+    {
+      "id": 1,
+      "type": "released",
+      "effective": "2019-01-01T00:00:00Z",
+      "published": "2019-01-01T00:00:00Z",
+      "version": "1.0.0",
+      "license": "MIT"
+    }
+  ]
+}
+  </code></pre>
 </emu-annex>
 
-<emu-annex id="sec-bibliography">
-  <h1>Bibliography</h1>
-  <p>TODO</p>
+<emu-annex id="sec-colophon" back-matter>
+  <h1>Colophon</h1>
+  <p>This specification is authored on <a href="https://github.com/Ecma-TC54/ECMA-xxx-CLE">GitHub</a> in a plaintext source format called <a href="https://github.com/bterlson/ecmarkup">Ecmarkup</a>. Ecmarkup is an HTML and Markdown dialect that provides a framework and toolset for authoring Ecma specifications in plaintext and processing the specification into a full-featured HTML rendering that follows the editorial conventions for this document. Ecmarkup builds on and integrates a number of other formats and technologies including <a href="https://github.com/rbuckton/grammarkdown">Grammarkdown</a> for defining syntax and <a href="https://github.com/domenic/ecmarkdown">Ecmarkdown</a> for authoring algorithm steps. PDF renderings of this specification are produced using a print stylesheet which takes advantage of the CSS Paged Media specification and is converted using <a href="https://www.princexml.com/">PrinceXML</a>.</p>
+  <p>Prior editions of this specification were authored using Word—the Ecmarkup source text that formed the basis of this edition was produced by converting the ECMAScript 2015 Word document to Ecmarkup using an automated conversion tool.</p>
 </emu-annex>
