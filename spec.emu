@@ -354,9 +354,6 @@
     <h1>endOfDevelopment</h1>
     <p><i>Category: Version Event</i></p>
     <p>The manufacturer or maintainer ceases work on Substantial Modifications for a specific version or version range of a component or service. Security Fixes and Bug Fixes will continue to be provided for this specific version or version range until endOfSupport is declared, but no new features or enhancements will be added.</p>
-    <emu-note>
-      <p>TL;DR: Ceasing Substantial Modifications.</p>
-    </emu-note>
     <p><b>Additional Required Fields:</b></p>
     <ul>
       <li><code>versions</code> - Array of version specifications</li>
@@ -369,9 +366,6 @@
     <p><i>Category: Version Event</i></p>
     <p>The manufacturer or maintainer ceases providing Security Fixes and Bug Fixes for a specific version or version range of a component or service.</p>
     <p>The <code>supportId</code> field MUST be included and used to specify which support policy is ending, referencing a support policy defined in the definitions section.</p>
-    <emu-note>
-      <p>TL;DR: Ceasing Security Fixes and Bug Fixes.</p>
-    </emu-note>
     <p><b>Additional Required Fields:</b></p>
     <ul>
       <li><code>versions</code> - Array of version specifications</li>
@@ -383,9 +377,6 @@
     <h1>endOfLife</h1>
     <p><i>Category: Version Event</i></p>
     <p>The manufacturer or maintainer formally ceases all work (including Distribution, Substantial Modifications, Bug Fixes, Security Fixes, Documentation, and Maintenance) for a specific version or version range of a component. No further updates, support, or distribution will be provided for this specific version or version range. The component is considered retired.</p>
-    <emu-note>
-      <p>TL;DR: Ceasing all work.</p>
-    </emu-note>
     <p><b>Additional Required Fields:</b></p>
     <ul>
       <li><code>versions</code> - Array of version specifications</li>
@@ -406,9 +397,6 @@
     <h1>endOfMarketing</h1>
     <p><i>Category: Version Event</i></p>
     <p>The manufacturer or maintainer ceases marketing and promotion of a specific version or version range of a component or service. The component or service may still be available, and existing support policies may remain in effect, but the manufacturer will no longer seek new customers or promote its use.</p>
-    <emu-note>
-      <p>TL;DR: Ceasing marketing and promotion.</p>
-    </emu-note>
     <p><b>Additional Required Fields:</b></p>
     <ul>
       <li><code>versions</code> - Array of version specifications</li>
