@@ -544,6 +544,39 @@
         </tbody>
       </table>
     </emu-table>
+
+    <emu-table id="table-page-descriptor-fields" caption="Page Descriptor Fields">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>url</code></td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>URL of the CLE page file.</td>
+          </tr>
+          <tr>
+            <td><code>firstEventId</code></td>
+            <td>integer</td>
+            <td>Yes</td>
+            <td>The lowest event ID in this page.</td>
+          </tr>
+          <tr>
+            <td><code>lastEventId</code></td>
+            <td>integer</td>
+            <td>Yes</td>
+            <td>The highest event ID in this page.</td>
+          </tr>
+        </tbody>
+      </table>
+    </emu-table>
   </emu-clause>
 
   <emu-clause id="sec-processing-paginated-files">
