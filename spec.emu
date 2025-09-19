@@ -21,6 +21,7 @@
     width: 500px;
   }
 
+  /*
   @page {
     @prince-overlay {
       color: rgba(0,0,0,0.15);
@@ -31,6 +32,7 @@
       transform: rotate(-60deg);
     }
   }
+  */
 
   .unicode-property-table {
     table-layout: fixed;
