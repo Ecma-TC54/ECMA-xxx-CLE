@@ -2,79 +2,24 @@
 <html lang="en-GB-oxendict">
 <meta charset="utf-8">
 <link rel="icon" href="img/favicon.ico">
-<style>
-  #metadata-block {
-    margin: 4em 0;
-    padding: 10px;
-    border: 1px solid #ee8421;
-  }
-  #metadata-block h1 {
-    font-size: 1.5em;
-    margin-top: 0;
-  }
-  #metadata-block > ul {
-    list-style-type: none;
-    margin: 0; padding: 0;
-  }
-
-  #ecma-logo {
-    width: 500px;
-  }
-
-  /*
-  @page {
-    @prince-overlay {
-      color: rgba(0,0,0,0.15);
-      content: "DRAFT";
-      font-family: Arial;
-      font-weight: bolder;
-      font-size: 200pt;
-      transform: rotate(-60deg);
-    }
-  }
-  */
-
-  .unicode-property-table {
-    table-layout: fixed;
-    width: 100%;
-    font-size: 80%;
-  }
-
-  .corner-cell {
-    position: relative;
-    height: 2lh;
-  }
-  .corner-cell .slash {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom left, transparent calc(50% - 1px), gray, transparent calc(50% + 1px));
-  }
-  .corner-cell > .column {
-    position: absolute;
-    bottom: 0.4em;
-    left: 1em;
-  }
-  .corner-cell > .row {
-    position: absolute;
-    top: 0.4em;
-    right: 1em;
+<style media="print">
+  #sec-example pre {
+    break-inside: auto;
   }
 </style>
 <pre class="metadata">
-  title: Common Lifecycle Enumeration Specification
+  title: Common Lifecycle Enumeration (CLE) specification
   shortname: ECMA-xxx
-  status: draft
+  status: standard
   location: https://tc54.org/ecmaXXX/
   markEffects: true
+  version: 1<sup>st</sup> Edition
 </pre>
 <p><img src="img/ecma-logo.svg" id="ecma-logo" alt="Ecma International logo"></p>
 <div id="metadata-block">
   <h1>About this Standard</h1>
   <p>The document at <a href="https://tc54.org/ecmaXXX/">https://tc54.org/ecmaXXX/</a> is the most accurate and up-to-date Common Lifecycle Enumeration specification.</p>
-  <p>This document is available as <a href>a single page</a> and as <a href="multipage/">multiple pages</a>.</p>
+  <p>This document is available as <a href>a single page</a> and as <a href="./multipage/">multiple pages</a>.</p>
   <h1>Contributing to this Standard</h1>
   <p>This standard is developed on GitHub with the help of the OWASP community. There are a number of ways to contribute to the development of this standard:</p>
   <ul>
@@ -110,6 +55,8 @@
   <p>The CLE specification is designed to complement existing standards in the software supply chain ecosystem, including the Package-URL (PURL) specification for component identification and the Version Range (VERS) specification (inlined <emu-xref href="#sec-vers">here</emu-xref>, pending standardization) for version constraints. It integrates with Software Bill of Materials (SBOM) formats and transparency exchange protocols to provide comprehensive lifecycle visibility.</p>
 
   <p>This document specifies version 1.0.0 of the Common Lifecycle Enumeration standard, developed under the auspices of Ecma International Technical Committee 54, Task Group 3 (TC54-TG3).</p>
+
+  <p class="adoption-info">This Ecma Standard was developed by Technical Committee 54 and was adopted by the General Assembly of December 2025.</p>
 </emu-intro>
 
 <emu-clause id="sec-scope">
@@ -123,19 +70,32 @@
 </emu-clause>
 
 <emu-clause id="sec-normative-references">
-  <h1>Normative References</h1>
-  <p>The following referenced documents are indispensable for the application of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-  <ul>
-    <li>RFC 2119, Key words for use in RFCs to Indicate Requirement Levels</li>
-    <li>ISO 8601, Date and time — Representations for information interchange</li>
-    <li>JSON Schema Draft 2020-12</li>
-    <li>Package-URL (PURL) Specification</li>
-    <li><emu-xref href="#sec-vers">Version Range (VERS) Specification</emu-xref></li>
-  </ul>
+  <h1>Normative references</h1>
+  <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+  <p>
+    ECMA-XXX, <i>Package-URL (PURL) Specification</i><br/>
+    <a href="https://ecma-tc54.github.io/ECMA-xxx-PURL/">https://ecma-tc54.github.io/ECMA-xxx-PURL/</a>
+  </p>
+  <p>
+    <i>Version Range (VERS) Specification</i><br/>
+    <emu-xref href="#sec-vers"></emu-xref>
+  </p>
+  <p>
+    ISO 8601, <i>Date and time — Representations for information interchange</i><br/>
+    <a href="https://www.iso.org/standard/70907.html">https://www.iso.org/standard/70907.html</a>
+  </p>
+  <p>
+    JSON Schema Draft 2020-12<br/>
+    <a href="https://json-schema.org/draft/2020-12/json-schema-core">https://json-schema.org/draft/2020-12/json-schema-core</a>
+  </p>
+  <p>
+    IETF RFC 2119, <i>Key words for use in RFCs to Indicate Requirement Levels</i><br>
+    <a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>
+  </p>
 </emu-clause>
 
 <emu-clause id="sec-terms-and-definitions">
-  <h1>Terms and Definitions</h1>
+  <h1>Terms and definitions</h1>
 
   <emu-clause id="sec-component">
     <h1>Component</h1>
@@ -143,7 +103,7 @@
   </emu-clause>
 
   <emu-clause id="sec-lifecycle-event">
-    <h1>Lifecycle Event</h1>
+    <h1>Lifecycle event</h1>
     <p>A significant occurrence in the existence of a component, such as release, end of support, or renaming.</p>
   </emu-clause>
 
@@ -153,7 +113,7 @@
   </emu-clause>
 
   <emu-clause id="sec-types-of-work">
-    <h1>Types of Work</h1>
+    <h1>Types of work</h1>
     <p>The following types of work are commonly associated with software projects regardless of whether they are open source or not:</p>
     <ul>
       <li><b>Marketing</b>: Promoting and advertising a software project to potential users.</li>
@@ -167,7 +127,7 @@
 </emu-clause>
 
 <emu-clause id="sec-schema-definition">
-  <h1>Schema Definition</h1>
+  <h1>Schema definition</h1>
 
   <emu-clause id="sec-json-schema">
     <h1>JSON Schema</h1>
@@ -183,7 +143,7 @@
   </emu-clause>
 
   <emu-clause id="sec-top-level-fields">
-    <h1>Top-level Fields</h1>
+    <h1>Top-level fields</h1>
 
     <emu-table id="table-required-fields" caption="Required Fields">
       <table>
@@ -250,11 +210,11 @@
   </emu-clause>
 
   <emu-clause id="sec-definitions-object">
-    <h1>Definitions Object</h1>
+    <h1>Definitions object</h1>
     <p>The definitions object allows specification of reusable policies and calculations that can be referenced by events.</p>
 
     <emu-clause id="sec-support-definitions">
-      <h1>Support Definitions</h1>
+      <h1>Support definitions</h1>
       <p>The support object defines the support policies provided for a specific version or version range of a component. This may include first-party manufacturer support or third-party support options endorsed by the manufacturer.</p>
       <p>Support policies are immutable once defined - the semantics and meaning of a support policy must not change over time for a given support policy ID. This ensures consistent interpretation of support commitments across the component's lifecycle.</p>
 
@@ -294,7 +254,7 @@
   </emu-clause>
 
   <emu-clause id="sec-event-object">
-    <h1>Event Object</h1>
+    <h1>Event object</h1>
     <p>The base object that represents a discrete lifecycle event. All events share these common fields.</p>
     <p>Events are immutable once created - the content and meaning of a specific event must not change after it has been published. Additionally, the ordering of events across shards must not change.</p>
 
@@ -335,7 +295,7 @@
 </emu-clause>
 
 <emu-clause id="sec-event-types">
-  <h1>Event Types</h1>
+  <h1>Event types</h1>
 
   <emu-clause id="sec-event-type-released">
     <h1>released</h1>
@@ -450,11 +410,11 @@
 </emu-clause>
 
 <emu-clause id="sec-event-categories">
-  <h1>Event Categories</h1>
+  <h1>Event categories</h1>
   <p>The CLE specification supports three distinct categories of events:</p>
 
   <emu-clause id="sec-version-events">
-    <h1>Version Events</h1>
+    <h1>Version events</h1>
     <p>Events that affect specific versions or ranges of versions of a component. These events use either the <code>version</code> or <code>range</code> field to specify which versions are affected. Version Events include:</p>
     <ul>
       <li><code>released</code></li>
@@ -468,7 +428,7 @@
   </emu-clause>
 
   <emu-clause id="sec-component-events">
-    <h1>Component Events</h1>
+    <h1>Component events</h1>
     <p>Events that affect the component itself and may impact how the component is identified or referenced. These events often affect all versions of a component from the effective date forward. Component Events include:</p>
     <ul>
       <li><code>componentRenamed</code> - Changes how the component is identified</li>
@@ -476,7 +436,7 @@
   </emu-clause>
 
   <emu-clause id="sec-meta-events">
-    <h1>Meta Events</h1>
+    <h1>Meta events</h1>
     <p>Events that affect other events in the history. These are used in the prepend-only event model to manage the event stream. Meta Events include:</p>
     <ul>
       <li><code>withdrawn</code> - Revokes a previously published event</li>
@@ -485,7 +445,7 @@
 </emu-clause>
 
 <emu-clause id="sec-event-processing-rules">
-  <h1>Event Processing Rules</h1>
+  <h1>Event processing rules</h1>
   <p>CLE uses a prepend-only event model with the following rules:</p>
 
   <emu-alg>
@@ -505,7 +465,7 @@
   <p>CLE supports pagination to handle components with extensive event histories. When a CLE file reaches the maximum limit of 100,000 events, it must be split into multiple pages.</p>
 
   <emu-clause id="sec-pagination-rules">
-    <h1>Pagination Rules</h1>
+    <h1>Pagination rules</h1>
     <emu-alg>
       1. <b>Page Size Limit</b>: A single CLE page must not exceed 100,000 events.
       1. <b>Event ID Continuity</b>: Event IDs must be globally unique and incrementing across all pages.
@@ -516,7 +476,7 @@
   </emu-clause>
 
   <emu-clause id="sec-cle-index-schema">
-    <h1>CLE Index Schema</h1>
+    <h1>CLE index schema</h1>
     <p>The CLE index file provides a directory of all pages for a component.</p>
 
     <emu-table id="table-index-fields" caption="Index Fields">
@@ -581,7 +541,7 @@
   </emu-clause>
 
   <emu-clause id="sec-processing-paginated-files">
-    <h1>Processing Paginated CLE Files</h1>
+    <h1>Processing paginated CLE files</h1>
     <p>When processing paginated CLE files:</p>
     <emu-alg>
       1. Start with any page (typically discovered via the index file or a known entry point).
@@ -593,11 +553,11 @@
 </emu-clause>
 
 <emu-clause id="sec-use-cases">
-  <h1>Use Cases</h1>
+  <h1>Use cases</h1>
   <p>The CLE specification aims to address several common use cases in software component lifecycle management.</p>
 
   <emu-clause id="sec-supported-use-cases">
-    <h1>v1.0.0 Supported Use Cases</h1>
+    <h1>v1.0.0 supported use cases</h1>
     <ul>
       <li><b>General Availability</b>: Track when new versions of a component are released and available for use</li>
       <li><b>End of Support/End of Life</b>: Communicate when versions will no longer receive updates or support</li>
@@ -606,7 +566,7 @@
   </emu-clause>
 
   <emu-clause id="sec-future-use-cases">
-    <h1>Future Use Cases</h1>
+    <h1>Future use cases</h1>
     <p>These use cases will be addressed in future versions of the specification based on community feedback and requirements:</p>
     <ul>
       <li><b>Complex License Changes</b>: Handling license changes for previously released versions</li>
@@ -622,7 +582,7 @@
 </emu-clause>
 
 <emu-annex id="sec-example">
-  <h1>Example CLE Document</h1>
+  <h1>Example CLE document</h1>
   <pre><code class="json">
 {
   "$schema": "https://TODO/cle.v1.0.0.json",
