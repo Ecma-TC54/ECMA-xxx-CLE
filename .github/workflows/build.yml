@@ -51,7 +51,7 @@ jobs:
       - run: npm run build
 
       - name: Archive "out" Directory
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: html-documentation
           path: ./out
@@ -101,7 +101,7 @@ jobs:
         run: npm run build-for-pdf
 
       - name: Archive PDF Output Directory
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: html-printable-documentation
           path: ./out
@@ -126,7 +126,7 @@ jobs:
             --script /usr/local/lib/node_modules/ecmarkup/js/print.js /work/index.html -o /work/spec.pdf
 
       - name: Archive PDF
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: pdf-snapshot
           path: ./out/spec.pdf
