@@ -581,7 +581,7 @@
   </emu-clause>
 </emu-clause>
 
-<emu-annex id="sec-vers">
+<emu-annex normative id="sec-vers">
   <h1>Version Range (VERS) Specification (Inlined)</h1>
 
   <p>This specification is a new syntax for dependency and vulnerable version
