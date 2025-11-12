@@ -98,12 +98,12 @@
   <h1>Terms and definitions</h1>
 
   <emu-clause id="sec-component">
-    <h1>Component</h1>
+    <h1>component</h1>
     <p>A discrete unit of software or hardware that can be independently identified, versioned, and tracked through its lifecycle.</p>
   </emu-clause>
 
   <emu-clause id="sec-lifecycle-event">
-    <h1>Lifecycle event</h1>
+    <h1>lifecycle event</h1>
     <p>A significant occurrence in the existence of a component, such as release, end of support, or renaming.</p>
   </emu-clause>
 
@@ -111,19 +111,19 @@
     <h1>PURL</h1>
     <p>Package-URL - a standardized format for identifying software packages across diverse ecosystems.</p>
   </emu-clause>
+</emu-clause>
 
-  <emu-clause id="sec-types-of-work">
-    <h1>Types of work</h1>
-    <p>The following types of work are commonly associated with software projects regardless of whether they are open source or not:</p>
-    <ul>
-      <li><b>Marketing</b>: Promoting and advertising a software project to potential users.</li>
-      <li><b>Substantial Modifications</b>: Making substantial changes to a software project that are not considered bug fixes or security fixes, such as adding new features or functionality.</li>
-      <li><b>Bug Fixes</b>: Addressing and resolving issues or defects in a software project.</li>
-      <li><b>Security Fixes</b>: A distinct type of bug fix focused on security vulnerabilities that is useful to differentiate from other types of bug fixes.</li>
-      <li><b>Distribution</b>: The process of making a software project available for use by others.</li>
-      <li><b>Documentation</b>: Writing and updating documentation for a software project to help users understand how to use it.</li>
-    </ul>
-  </emu-clause>
+<emu-clause id="sec-types-of-work">
+  <h1>Types of work</h1>
+  <p>The following types of work are commonly associated with software projects regardless of whether they are open source or not:</p>
+  <ul>
+    <li><b>Marketing</b>: Promoting and advertising a software project to potential users.</li>
+    <li><b>Substantial Modifications</b>: Making substantial changes to a software project that are not considered bug fixes or security fixes, such as adding new features or functionality.</li>
+    <li><b>Bug Fixes</b>: Addressing and resolving issues or defects in a software project.</li>
+    <li><b>Security Fixes</b>: A distinct type of bug fix focused on security vulnerabilities that is useful to differentiate from other types of bug fixes.</li>
+    <li><b>Distribution</b>: The process of making a software project available for use by others.</li>
+    <li><b>Documentation</b>: Writing and updating documentation for a software project to help users understand how to use it.</li>
+  </ul>
 </emu-clause>
 
 <emu-clause id="sec-schema-definition">
@@ -317,7 +317,7 @@
     <p>The manufacturer or maintainer ceases work on Substantial Modifications for a specific version or version range of a component or service. Security Fixes and Bug Fixes will continue to be provided for this specific version or version range until endOfSupport is declared, but no new features or enhancements will be added.</p>
     <p><b>Additional Required Fields:</b></p>
     <ul>
-      <li><code>versions</code> - Array of version specifications</li>
+      <li><code>versions</code> - Array of version specifications, per <emu-xref href="#sec-vers"></emu-xref></emu-xref></li>
       <li><code>supportId</code> - Reference to a support policy defined in the definitions section</li>
     </ul>
   </emu-clause>
@@ -340,7 +340,7 @@
     <p>The manufacturer or maintainer formally ceases all work (including Distribution, Substantial Modifications, Bug Fixes, Security Fixes, Documentation, and Maintenance) for a specific version or version range of a component. No further updates, support, or distribution will be provided for this specific version or version range. The component is considered retired.</p>
     <p><b>Additional Required Fields:</b></p>
     <ul>
-      <li><code>versions</code> - Array of version specifications</li>
+      <li><code>versions</code> - Array of version specifications, per <emu-xref href="#sec-vers"></emu-xref></li>
     </ul>
   </emu-clause>
 
@@ -350,7 +350,7 @@
     <p>The manufacturer or maintainer ceases distribution of a specific version or version range of a component or service. This should only be used when the manufacturer has control over the distribution of the component or service.</p>
     <p><b>Additional Required Fields:</b></p>
     <ul>
-      <li><code>versions</code> - Array of version specifications</li>
+      <li><code>versions</code> - Array of version specifications, per <emu-xref href="#sec-vers"></emu-xref></li>
     </ul>
   </emu-clause>
 
@@ -360,7 +360,7 @@
     <p>The manufacturer or maintainer ceases marketing and promotion of a specific version or version range of a component or service. The component or service may still be available, and existing support policies may remain in effect, but the manufacturer will no longer seek new customers or promote its use.</p>
     <p><b>Additional Required Fields:</b></p>
     <ul>
-      <li><code>versions</code> - Array of version specifications</li>
+      <li><code>versions</code> - Array of version specifications, per <emu-xref href="#sec-vers"></emu-xref></li>
     </ul>
   </emu-clause>
 
@@ -374,7 +374,7 @@
     </ul>
     <p><b>Additional Optional Fields:</b></p>
     <ul>
-      <li><code>versions</code> - Array of version specifications</li>
+      <li><code>versions</code> - Array of version specifications, per <emu-xref href="#sec-vers"></emu-xref></li>
     </ul>
   </emu-clause>
 
@@ -415,7 +415,7 @@
 
   <emu-clause id="sec-version-events">
     <h1>Version events</h1>
-    <p>Events that affect specific versions or ranges of versions of a component. These events use either the <code>version</code> or <code>range</code> field to specify which versions are affected. Version Events include:</p>
+    <p>Events that affect specific <emu-xref href="#sec-vers">versions or ranges of versions</emu-xref> of a component. These events use either the <code>version</code> or <code>range</code> field to specify which versions are affected. Version Events include:</p>
     <ul>
       <li><code>released</code></li>
       <li><code>endOfDevelopment</code></li>
@@ -559,9 +559,9 @@
   <emu-clause id="sec-supported-use-cases">
     <h1>v1.0.0 supported use cases</h1>
     <ul>
-      <li><b>General Availability</b>: Track when new versions of a component are released and available for use</li>
-      <li><b>End of Support/End of Life</b>: Communicate when versions will no longer receive updates or support</li>
-      <li><b>Component Renaming</b>: Handle cases where a component's identifiers change</li>
+      <li><b>General Availability</b>: Track when new versions of a component are released and available for use.</li>
+      <li><b>End of Support/End of Life</b>: Communicate when versions will no longer receive updates or support.</li>
+      <li><b>Component Renaming</b>: Handle cases where a component's identifiers change.</li>
     </ul>
   </emu-clause>
 
@@ -569,95 +569,17 @@
     <h1>Future use cases</h1>
     <p>These use cases will be addressed in future versions of the specification based on community feedback and requirements:</p>
     <ul>
-      <li><b>Complex License Changes</b>: Handling license changes for previously released versions</li>
-      <li><b>Component Bundling/Unbundling</b>: Track when components are bundled into or extracted from larger packages</li>
-      <li><b>Component Acquisition</b>: Handle cases where components change ownership</li>
-      <li><b>Extended Support</b>: Support for third-party extended support offerings</li>
-      <li><b>Third Party Claims</b>: Handling CLE from a third party perspective</li>
-      <li><b>Component Forking</b>: Track when components are forked into new projects</li>
-      <li><b>Export Restrictions</b>: Handle cases where components become restricted in certain regions</li>
-      <li><b>Security Status Changes</b>: Track when components are marked as compromised or unsafe</li>
+      <li><b>Complex License Changes</b>: Handling license changes for previously released versions.</li>
+      <li><b>Component Bundling/Unbundling</b>: Track when components are bundled into or extracted from larger packages.</li>
+      <li><b>Component Acquisition</b>: Handle cases where components change ownership.</li>
+      <li><b>Extended Support</b>: Support for third-party extended support offerings.</li>
+      <li><b>Third Party Claims</b>: Handling CLE from a third party perspective.</li>
+      <li><b>Component Forking</b>: Track when components are forked into new projects.</li>
+      <li><b>Export Restrictions</b>: Handle cases where components become restricted in certain regions.</li>
+      <li><b>Security Status Changes</b>: Track when components are marked as compromised or unsafe.</li>
     </ul>
   </emu-clause>
 </emu-clause>
-
-<emu-annex id="sec-example">
-  <h1>Example CLE document</h1>
-  <pre><code class="json">
-{
-  "$schema": "https://TODO/cle.v1.0.0.json",
-  "identifier": "pkg:npm/example-component",
-  "updatedAt": "2021-01-15T00:00:00Z",
-  "definitions": {
-    "support": [
-      {
-        "id": "standard",
-        "description": "Standard product support policy",
-        "url": "https://example.com/support/standard"
-      }
-    ]
-  },
-  "events": [
-    {
-      "id": 5,
-      "type": "withdrawn",
-      "effective": "2021-01-15T00:00:00Z",
-      "published": "2021-01-15T00:00:00Z",
-      "eventId": 2,
-      "reason": "The endOfSupport date was incorrect.",
-      "references": [
-        "https://example.com/support-correction"
-      ]
-    },
-    {
-      "id": 4,
-      "type": "endOfSupport",
-      "effective": "2021-01-01T00:00:00Z",
-      "published": "2021-01-01T00:00:00Z",
-      "versions": [
-        {
-          "range": "vers:npm/>=1.0.0|<2.0.0"
-        }
-      ],
-      "supportId": "standard"
-    },
-    {
-      "id": 3,
-      "type": "componentRenamed",
-      "effective": "2020-01-01T00:00:00Z",
-      "published": "2020-01-01T00:00:00Z",
-      "description": "Component renamed due to acquisition",
-      "identifiers": [
-        {
-          "type": "PURL",
-          "value": "pkg:npm/new-component"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "type": "endOfSupport",
-      "effective": "2020-01-01T00:00:00Z",
-      "published": "2020-01-01T00:00:00Z",
-      "versions": [
-        {
-          "range": "vers:npm/>=1.0.0|<2.0.0"
-        }
-      ],
-      "supportId": "standard"
-    },
-    {
-      "id": 1,
-      "type": "released",
-      "effective": "2019-01-01T00:00:00Z",
-      "published": "2019-01-01T00:00:00Z",
-      "version": "1.0.0",
-      "license": "MIT"
-    }
-  ]
-}
-  </code></pre>
-</emu-annex>
 
 <emu-annex id="sec-vers">
   <h1>Version Range (VERS) Specification (Inlined)</h1>
@@ -1229,6 +1151,84 @@ ranges.</p>
   <h2>License</h2>
 
   <p>This document is licensed under the MIT license</p>
+</emu-annex>
+
+<emu-annex id="sec-example">
+  <h1>Example CLE document</h1>
+  <pre><code class="json">
+{
+  "$schema": "https://TODO/cle.v1.0.0.json",
+  "identifier": "pkg:npm/example-component",
+  "updatedAt": "2021-01-15T00:00:00Z",
+  "definitions": {
+    "support": [
+      {
+        "id": "standard",
+        "description": "Standard product support policy",
+        "url": "https://example.com/support/standard"
+      }
+    ]
+  },
+  "events": [
+    {
+      "id": 5,
+      "type": "withdrawn",
+      "effective": "2021-01-15T00:00:00Z",
+      "published": "2021-01-15T00:00:00Z",
+      "eventId": 2,
+      "reason": "The endOfSupport date was incorrect.",
+      "references": [
+        "https://example.com/support-correction"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "endOfSupport",
+      "effective": "2021-01-01T00:00:00Z",
+      "published": "2021-01-01T00:00:00Z",
+      "versions": [
+        {
+          "range": "vers:npm/>=1.0.0|<2.0.0"
+        }
+      ],
+      "supportId": "standard"
+    },
+    {
+      "id": 3,
+      "type": "componentRenamed",
+      "effective": "2020-01-01T00:00:00Z",
+      "published": "2020-01-01T00:00:00Z",
+      "description": "Component renamed due to acquisition",
+      "identifiers": [
+        {
+          "type": "PURL",
+          "value": "pkg:npm/new-component"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "endOfSupport",
+      "effective": "2020-01-01T00:00:00Z",
+      "published": "2020-01-01T00:00:00Z",
+      "versions": [
+        {
+          "range": "vers:npm/>=1.0.0|<2.0.0"
+        }
+      ],
+      "supportId": "standard"
+    },
+    {
+      "id": 1,
+      "type": "released",
+      "effective": "2019-01-01T00:00:00Z",
+      "published": "2019-01-01T00:00:00Z",
+      "version": "1.0.0",
+      "license": "MIT"
+    }
+  ]
+}
+  </code></pre>
 </emu-annex>
 
 <emu-annex id="sec-colophon" back-matter>
