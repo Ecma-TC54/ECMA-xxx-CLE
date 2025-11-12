@@ -67,7 +67,7 @@ jobs:
       id-token: write
     steps:
       - name: Restore html-documentation Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: html-documentation
           path: ./out
@@ -112,7 +112,7 @@ jobs:
     needs: build-for-pdf
     steps:
       - name: Restore PDF Output
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: html-printable-documentation
           path: ./out
