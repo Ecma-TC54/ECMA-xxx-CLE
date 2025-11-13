@@ -11,6 +11,7 @@
   title: Common Lifecycle Enumeration (CLE) specification
   shortname: ECMA-xxx
   status: standard
+  committee: 54
   location: https://tc54.org/ecmaXXX/
   markEffects: true
   version: 1<sup>st</sup> Edition
