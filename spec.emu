@@ -12,6 +12,7 @@
   shortname: ECMA-xxx
   status: standard
   committee: 54
+  date: 2025-12-06
   location: https://tc54.org/ecmaXXX/
   markEffects: true
   version: 1<sup>st</sup> Edition
@@ -56,8 +57,6 @@
   <p>The CLE specification is designed to complement existing standards in the software supply chain ecosystem, including the Package-URL (PURL) specification for component identification and the Version Range (VERS) specification (inlined <emu-xref href="#sec-vers">here</emu-xref>, pending standardization) for version constraints. It integrates with Software Bill of Materials (SBOM) formats and transparency exchange protocols to provide comprehensive lifecycle visibility.</p>
 
   <p>This document specifies version 1.0.0 of the Common Lifecycle Enumeration standard, developed under the auspices of Ecma International Technical Committee 54, Task Group 3 (TC54-TG3).</p>
-
-  <p class="adoption-info">This Ecma Standard was developed by Technical Committee 54 and was adopted by the General Assembly of December 2025.</p>
 </emu-intro>
 
 <emu-clause id="sec-scope">
